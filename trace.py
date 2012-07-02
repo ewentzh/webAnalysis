@@ -41,7 +41,7 @@ def print_trace(level,msg):
 
 
 def header(lvl,msg):
-    file = "test.py"
+    file = __file__
     timeNow = time.strftime('%H:%M:%S',time.localtime(time.time()))
     return "["+debug_info[lvl] + file + " "+timeNow +"]: "+ msg + "\n"
 
