@@ -2,6 +2,7 @@
 bin
 obj
 *.pyo
+*.pyc
 
 # mstest test results
 TestResults
