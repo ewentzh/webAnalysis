@@ -2,8 +2,11 @@
 
 ###############################################################
 import sys
+import os
+import os.path
 import types
 import time
+import traceback
 ###############################################################
 __author__="ewentzh"
 __date__="$2012-7-1 19:45:36$"
@@ -11,10 +14,10 @@ __date__="$2012-7-1 19:45:36$"
 
 debug_on = "on"
 current_level=1
-debug_info={   1:  "DEBUG   ",
-               2:  "TRACE   ",
-               3:  "WRANING ",
-               4:  "ERROR   "
+debug_info={   1:  "DEBUG",
+               2:  "TRACE",
+               3:  "WRANING",
+               4:  "ERROR"
             }
 
 def set_debug_level(lvl):
@@ -27,23 +30,27 @@ def set_debug_level(lvl):
 def __debug(info):
     global debug_on
     if debug_on == "on":
-        sys.stdout.write("[DEBUG]: "+info+"\n")
+        print >> sys.stdout, "[DEBUG]: "+info+"\n"
 
 def print_trace(level,msg):
     if not debug_info.has_key(level):
-        sys.stderr.write("Missing........\n")
+        print>>sys.stderr,"Missing........\n"
         return
     if level < current_level:
         __debug("Current Level:"+str(current_level)+",can not display message!!");
         return
     formatMsg = header(level,msg)
-    sys.stdout.write(formatMsg)
+    if level == 4:
+        print >> sys.stderr, formatMsg
+    else:
+        print >> sys.stdout, formatMsg
 
 
 def header(lvl,msg):
-    file = __file__
     timeNow = time.strftime('%H:%M:%S',time.localtime(time.time()))
-    return "["+debug_info[lvl] + file + " "+timeNow +"]: "+ msg + "\n"
+    stack = traceback.extract_stack()[-4]
+    return "[%s %s %s:%d %s]: %s" % (debug_info[lvl].ljust(7),os.path.basename(stack[0]),stack[2], stack[1], timeNow,msg)
+
 
 def error(msg):
     print_trace(4,msg)

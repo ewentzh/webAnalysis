@@ -5,12 +5,12 @@ import sys
 import os
 #import trace
 
+sys.path.insert(0,os.path.abspath(os.path.pardir))
+import trace
+
 __author__ = "ewentzh"
 __date__   = "$2012-7-1$"
 
-pwd = os.getcwd()
-sys.path.append(pwd +"/../")
-import trace
 
 
 def test__trace():
