@@ -3,10 +3,11 @@
 ############################################################################
 import sys
 import os
-#import trace
+
+
 
 sys.path.insert(0,os.path.abspath(os.path.pardir))
-import trace
+import libs
 
 __author__ = "ewentzh"
 __date__   = "$2012-7-1$"
@@ -14,7 +15,7 @@ __date__   = "$2012-7-1$"
 
 
 def test__trace():
-    trace.error("Here is the Error!!!")
+    libs.trace.error("Here is the Error!!!")
 
 
 def test__getPage():
