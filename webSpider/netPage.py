@@ -23,34 +23,35 @@ import libs
 __author__="ewentzh"
 __date__="$2012-7-1 09:45:36$"
 
-
-def requestPage(url):
-    '''
-    Request url link from the Internet.
+class netPage:
+    def requestPage(self,url):
+        '''
+        Request url link from the Internet.
+        
+        it is the Orignal HTML content.
+        '''
+        req = urllib2.Request(url)
+        response = urllib2.urlopen(req)
+        
+        content = response.read()
+        response.close()
+        return content
     
-    it is the Orignal HTML content.
-    '''
-    req = urllib2.Request(url)
-    response = urllib2.urlopen(req)
-
-    content = response.read()
-    response.close()
-
-    return content
-
-def utf8_encoding(content):
-    '''
-    hello
-    '''
-    return content.decode('gb2312').encode('utf8').replace('gb2312','utf-8')
+    def utf8_encoding(self,content):
+        '''
+        decode the content and encoding it to default encorage[utf8].
+        Here Need to check encode
+        '''
+        return content.decode('gb2312').encode('utf8').replace('gb2312','utf-8')
 
 
 
 def test__getPage():
+    netpage = netPage()
     url = "http://www.baidu.com/s?wd=%E5%8C%97%E4%BA%AC%E5%86%B7%E5%BA%93&rsv_spt=1&issp=1&rsv_bp=0&ie=utf-8&tn=baiduhome_pg&inputT=2063"
-    content = requestPage(url)
+    content = netpage.requestPage(url)
     print content
-    content = utf8_encoding(content)
+    content = netpage.utf8_encoding(content)
     print content
 
 if __name__ == "__main__":
